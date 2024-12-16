@@ -27,11 +27,10 @@ import 'package:collection/collection.dart';
 /** This is an auto generated class representing the Profile type in your schema. */
 class Profile extends amplify_core.Model {
   static const classType = const _ProfileModelType();
-  final String id;
+  final String? _email;
   final String? _username;
   final String? _avatar;
-  final String? _status;
-  final amplify_core.TemporalDateTime? _lastSeen;
+  final String? _owner;
   final List<ProfileGroup>? _groups;
   final List<Chat>? _chats;
   final amplify_core.TemporalDateTime? _createdAt;
@@ -42,12 +41,34 @@ class Profile extends amplify_core.Model {
   
   @Deprecated('[getId] is being deprecated in favor of custom primary key feature. Use getter [modelIdentifier] to get model identifier.')
   @override
-  String getId() => id;
+  String getId() => modelIdentifier.serializeAsString();
   
   ProfileModelIdentifier get modelIdentifier {
+    try {
       return ProfileModelIdentifier(
-        id: id
+        email: _email!
       );
+    } catch(e) {
+      throw amplify_core.AmplifyCodeGenModelException(
+          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
+  }
+  
+  String get email {
+    try {
+      return _email!;
+    } catch(e) {
+      throw amplify_core.AmplifyCodeGenModelException(
+          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
   
   String? get username {
@@ -58,12 +79,8 @@ class Profile extends amplify_core.Model {
     return _avatar;
   }
   
-  String? get status {
-    return _status;
-  }
-  
-  amplify_core.TemporalDateTime? get lastSeen {
-    return _lastSeen;
+  String? get owner {
+    return _owner;
   }
   
   List<ProfileGroup>? get groups {
@@ -82,15 +99,14 @@ class Profile extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const Profile._internal({required this.id, username, avatar, status, lastSeen, groups, chats, createdAt, updatedAt}): _username = username, _avatar = avatar, _status = status, _lastSeen = lastSeen, _groups = groups, _chats = chats, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Profile._internal({required email, username, avatar, owner, groups, chats, createdAt, updatedAt}): _email = email, _username = username, _avatar = avatar, _owner = owner, _groups = groups, _chats = chats, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Profile({String? id, String? username, String? avatar, String? status, amplify_core.TemporalDateTime? lastSeen, List<ProfileGroup>? groups, List<Chat>? chats}) {
+  factory Profile({required String email, String? username, String? avatar, String? owner, List<ProfileGroup>? groups, List<Chat>? chats}) {
     return Profile._internal(
-      id: id == null ? amplify_core.UUID.getUUID() : id,
+      email: email,
       username: username,
       avatar: avatar,
-      status: status,
-      lastSeen: lastSeen,
+      owner: owner,
       groups: groups != null ? List<ProfileGroup>.unmodifiable(groups) : groups,
       chats: chats != null ? List<Chat>.unmodifiable(chats) : chats);
   }
@@ -103,11 +119,10 @@ class Profile extends amplify_core.Model {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Profile &&
-      id == other.id &&
+      _email == other._email &&
       _username == other._username &&
       _avatar == other._avatar &&
-      _status == other._status &&
-      _lastSeen == other._lastSeen &&
+      _owner == other._owner &&
       DeepCollectionEquality().equals(_groups, other._groups) &&
       DeepCollectionEquality().equals(_chats, other._chats);
   }
@@ -120,11 +135,10 @@ class Profile extends amplify_core.Model {
     var buffer = new StringBuffer();
     
     buffer.write("Profile {");
-    buffer.write("id=" + "$id" + ", ");
+    buffer.write("email=" + "$_email" + ", ");
     buffer.write("username=" + "$_username" + ", ");
     buffer.write("avatar=" + "$_avatar" + ", ");
-    buffer.write("status=" + "$_status" + ", ");
-    buffer.write("lastSeen=" + (_lastSeen != null ? _lastSeen!.format() : "null") + ", ");
+    buffer.write("owner=" + "$_owner" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -132,13 +146,12 @@ class Profile extends amplify_core.Model {
     return buffer.toString();
   }
   
-  Profile copyWith({String? username, String? avatar, String? status, amplify_core.TemporalDateTime? lastSeen, List<ProfileGroup>? groups, List<Chat>? chats}) {
+  Profile copyWith({String? username, String? avatar, String? owner, List<ProfileGroup>? groups, List<Chat>? chats}) {
     return Profile._internal(
-      id: id,
+      email: email,
       username: username ?? this.username,
       avatar: avatar ?? this.avatar,
-      status: status ?? this.status,
-      lastSeen: lastSeen ?? this.lastSeen,
+      owner: owner ?? this.owner,
       groups: groups ?? this.groups,
       chats: chats ?? this.chats);
   }
@@ -146,28 +159,25 @@ class Profile extends amplify_core.Model {
   Profile copyWithModelFieldValues({
     ModelFieldValue<String?>? username,
     ModelFieldValue<String?>? avatar,
-    ModelFieldValue<String?>? status,
-    ModelFieldValue<amplify_core.TemporalDateTime?>? lastSeen,
+    ModelFieldValue<String?>? owner,
     ModelFieldValue<List<ProfileGroup>?>? groups,
     ModelFieldValue<List<Chat>?>? chats
   }) {
     return Profile._internal(
-      id: id,
+      email: email,
       username: username == null ? this.username : username.value,
       avatar: avatar == null ? this.avatar : avatar.value,
-      status: status == null ? this.status : status.value,
-      lastSeen: lastSeen == null ? this.lastSeen : lastSeen.value,
+      owner: owner == null ? this.owner : owner.value,
       groups: groups == null ? this.groups : groups.value,
       chats: chats == null ? this.chats : chats.value
     );
   }
   
   Profile.fromJson(Map<String, dynamic> json)  
-    : id = json['id'],
+    : _email = json['email'],
       _username = json['username'],
       _avatar = json['avatar'],
-      _status = json['status'],
-      _lastSeen = json['lastSeen'] != null ? amplify_core.TemporalDateTime.fromString(json['lastSeen']) : null,
+      _owner = json['owner'],
       _groups = json['groups']  is Map
         ? (json['groups']['items'] is List
           ? (json['groups']['items'] as List)
@@ -198,15 +208,14 @@ class Profile extends amplify_core.Model {
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'username': _username, 'avatar': _avatar, 'status': _status, 'lastSeen': _lastSeen?.format(), 'groups': _groups?.map((ProfileGroup? e) => e?.toJson()).toList(), 'chats': _chats?.map((Chat? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'email': _email, 'username': _username, 'avatar': _avatar, 'owner': _owner, 'groups': _groups?.map((ProfileGroup? e) => e?.toJson()).toList(), 'chats': _chats?.map((Chat? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
-    'id': id,
+    'email': _email,
     'username': _username,
     'avatar': _avatar,
-    'status': _status,
-    'lastSeen': _lastSeen,
+    'owner': _owner,
     'groups': _groups,
     'chats': _chats,
     'createdAt': _createdAt,
@@ -214,11 +223,10 @@ class Profile extends amplify_core.Model {
   };
 
   static final amplify_core.QueryModelIdentifier<ProfileModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<ProfileModelIdentifier>();
-  static final ID = amplify_core.QueryField(fieldName: "id");
+  static final EMAIL = amplify_core.QueryField(fieldName: "email");
   static final USERNAME = amplify_core.QueryField(fieldName: "username");
   static final AVATAR = amplify_core.QueryField(fieldName: "avatar");
-  static final STATUS = amplify_core.QueryField(fieldName: "status");
-  static final LASTSEEN = amplify_core.QueryField(fieldName: "lastSeen");
+  static final OWNER = amplify_core.QueryField(fieldName: "owner");
   static final GROUPS = amplify_core.QueryField(
     fieldName: "groups",
     fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'ProfileGroup'));
@@ -248,7 +256,15 @@ class Profile extends amplify_core.Model {
         ])
     ];
     
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.id());
+    modelSchemaDefinition.indexes = [
+      amplify_core.ModelIndex(fields: const ["email"], name: null)
+    ];
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: Profile.EMAIL,
+      isRequired: true,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: Profile.USERNAME,
@@ -263,15 +279,9 @@ class Profile extends amplify_core.Model {
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: Profile.STATUS,
+      key: Profile.OWNER,
       isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: Profile.LASTSEEN,
-      isRequired: false,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.dateTime)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.hasMany(
@@ -323,15 +333,15 @@ class _ProfileModelType extends amplify_core.ModelType<Profile> {
  * of [Profile] in your schema.
  */
 class ProfileModelIdentifier implements amplify_core.ModelIdentifier<Profile> {
-  final String id;
+  final String email;
 
-  /** Create an instance of ProfileModelIdentifier using [id] the primary key. */
+  /** Create an instance of ProfileModelIdentifier using [email] the primary key. */
   const ProfileModelIdentifier({
-    required this.id});
+    required this.email});
   
   @override
   Map<String, dynamic> serializeAsMap() => (<String, dynamic>{
-    'id': id
+    'email': email
   });
   
   @override
@@ -344,7 +354,7 @@ class ProfileModelIdentifier implements amplify_core.ModelIdentifier<Profile> {
   String serializeAsString() => serializeAsMap().values.join('#');
   
   @override
-  String toString() => 'ProfileModelIdentifier(id: $id)';
+  String toString() => 'ProfileModelIdentifier(email: $email)';
   
   @override
   bool operator ==(Object other) {
@@ -353,10 +363,10 @@ class ProfileModelIdentifier implements amplify_core.ModelIdentifier<Profile> {
     }
     
     return other is ProfileModelIdentifier &&
-      id == other.id;
+      email == other.email;
   }
   
   @override
   int get hashCode =>
-    id.hashCode;
+    email.hashCode;
 }

@@ -33,7 +33,7 @@ export 'ProfileGroup.dart';
 
 class ModelProvider implements amplify_core.ModelProviderInterface {
   @override
-  String version = "21ed7db2e63c648575fe73ed18dab559";
+  String version = "7900dbd213751cc9f46a2b66518698ae";
   @override
   List<amplify_core.ModelSchema> modelSchemas = [Chat.schema, Group.schema, Profile.schema, ProfileGroup.schema];
   @override

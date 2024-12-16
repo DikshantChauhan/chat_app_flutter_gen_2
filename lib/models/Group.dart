@@ -48,8 +48,17 @@ class Group extends amplify_core.Model {
       );
   }
   
-  String? get name {
-    return _name;
+  String get name {
+    try {
+      return _name!;
+    } catch(e) {
+      throw amplify_core.AmplifyCodeGenModelException(
+          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
   
   GroupType? get type {
@@ -72,9 +81,9 @@ class Group extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const Group._internal({required this.id, name, type, profiles, chats, createdAt, updatedAt}): _name = name, _type = type, _profiles = profiles, _chats = chats, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Group._internal({required this.id, required name, type, profiles, chats, createdAt, updatedAt}): _name = name, _type = type, _profiles = profiles, _chats = chats, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Group({String? id, String? name, GroupType? type, List<ProfileGroup>? profiles, List<Chat>? chats}) {
+  factory Group({String? id, required String name, GroupType? type, List<ProfileGroup>? profiles, List<Chat>? chats}) {
     return Group._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       name: name,
@@ -126,7 +135,7 @@ class Group extends amplify_core.Model {
   }
   
   Group copyWithModelFieldValues({
-    ModelFieldValue<String?>? name,
+    ModelFieldValue<String>? name,
     ModelFieldValue<GroupType?>? type,
     ModelFieldValue<List<ProfileGroup>?>? profiles,
     ModelFieldValue<List<Chat>?>? chats
@@ -220,11 +229,15 @@ class Group extends amplify_core.Model {
         ])
     ];
     
+    modelSchemaDefinition.indexes = [
+      amplify_core.ModelIndex(fields: const ["name"], name: "groupsByName")
+    ];
+    
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: Group.NAME,
-      isRequired: false,
+      isRequired: true,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
